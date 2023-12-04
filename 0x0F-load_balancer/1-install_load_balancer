@@ -4,7 +4,7 @@
 #+    Distributes requests using a round-robin algorithm.
 
 sudo apt-get -y update
-sudo apt-get -y upgrade
+
 sudo apt-get -y install haproxy
 
 echo "ENABLED=1" >> /etc/default/haproxy
@@ -34,8 +34,8 @@ listen hbnb
     balance roundrobin
     option httpclose
     option forwardfor
-    server 284917-web-01 52.87.231.55 check
-    server 284917-web-02 54.160.91.192 check
+    server 284917-web-01 100.25.166.108 check
+    server 284917-web-02 100.26.162.51 check
 " >> /etc/haproxy/haproxy.cfg
 
 sudo service haproxy start
