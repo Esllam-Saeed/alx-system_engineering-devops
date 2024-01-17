@@ -1,35 +1,27 @@
-import requests
+#!/usr/bin/python3
+"""
+number of subscribers for a given subreddit
+"""
+
+from requests import get
+
 
 def number_of_subscribers(subreddit):
-    # Reddit API endpoint for subreddit information
-    url = f'https://www.reddit.com/r/{subreddit}/about.json'
-    
-    # Set a custom User-Agent to avoid Too Many Requests error
-    headers = {'User-Agent': 'MyBot/1.0 (by /u/your_username)'}
+    """
+    function that queries the Reddit API and returns the number of subscribers
+    (not active users, total subscribers) for a given subreddit.
+    """
 
-    # Make the GET request
-    response = requests.get(url, headers=headers)
-
-    # Check if the request was successful (status code 200)
-    if response.status_code == 200:
-        # Parse the JSON response
-        subreddit_info = response.json()
-
-        # Extract and return the number of subscribers
-        return subreddit_info['data']['subscribers']
-    elif response.status_code == 404:
-        # Invalid subreddit, return 0
-        return 0
-    else:
-        # Handle other errors by printing the status code
-        print(f"Error: {response.status_code}")
+    if subreddit is None or not isinstance(subreddit, str):
         return 0
 
-# Example usage
-subreddit_name = 'python'
-subscribers = number_of_subscribers(subreddit_name)
+    user_agent = {'User-agent': 'Google Chrome Version 81.0.4044.129'}
+    url = 'https://www.reddit.com/r/{}/about.json'.format(subreddit)
+    response = get(url, headers=user_agent)
+    results = response.json()
 
-if subscribers != 0:
-    print(f"The subreddit '{subreddit_name}' has {subscribers} subscribers.")
-else:
-    print(f"Invalid subreddit: '{subreddit_name}'.")
+    try:
+        return results.get('data').get('subscribers')
+
+    except Exception:
+        return 0
