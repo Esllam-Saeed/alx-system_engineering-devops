@@ -1,4 +1,4 @@
-# API advanced
+## API advanced
 
 Practising querying API's in this advanced API project, this time
 working with the Reddit API.
